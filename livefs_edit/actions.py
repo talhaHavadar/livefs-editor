@@ -633,7 +633,7 @@ def install_packages(ctxt, packages: List[str]):
     env = os.environ.copy()
     env['DEBIAN_FRONTEND'] = 'noninteractive'
     env['LANG'] = 'C.UTF-8'
-    ctxt.run(['chroot', base, 'apt-get', 'install', '-y'] + packages, env=env)
+    ctxt.run(['chroot', base, 'apt-get', '-o Dpkg::Options::="--force-confnew"', 'install', '-y'] + packages, env=env)
 
 
 @register_action()
