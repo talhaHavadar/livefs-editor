@@ -162,7 +162,11 @@ class EditContext:
                 ('devpts',     'dev/pts'),
                 ('proc',       'proc'),
                 ]:
+            print(f"mounting {typ}:{mountpoint}/{relpath}")
             mnts.append(self.add_mount(typ, typ, f'{mountpoint}/{relpath}'))
+        # mnts.append(self.add_mount("tmpfs", "none", f'{mountpoint}/tmp'))
+        # mnts.append(self.add_mount("tmpfs", "none", f'{mountpoint}/var/lib/apt'))
+        # mnts.append(self.add_mount("tmpfs", "none", f'{mountpoint}/var/cache/apt'))
         ro_targets = []
         for fs in self.get_sysfs_mounts():
             relpath = fs['target'].lstrip('/')
