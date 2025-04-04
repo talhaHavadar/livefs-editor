@@ -634,6 +634,12 @@ def install_packages(ctxt, packages: List[str]):
     env['DEBIAN_FRONTEND'] = 'noninteractive'
     env['LANG'] = 'C.UTF-8'
     ctxt.run(['chroot', base, 'apt-get', 'install', '-y'] + packages, env=env)
+    layer1 = ctxt.edit_squashfs(get_squash_names(ctxt)[1])
+    ctxt.run(["chroot", layer1, "apt-get", "update"])
+    env = os.environ.copy()
+    env["DEBIAN_FRONTEND"] = "noninteractive"
+    env["LANG"] = "C.UTF-8"
+    ctxt.run(["chroot", layer1, "apt-get", "install", "-y"] + packages, env=env)
 
 
 @register_action()
